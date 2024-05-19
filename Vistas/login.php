@@ -23,3 +23,27 @@
     </div>
 </body>
 </html>
+
+<?php
+//Get data form
+if(isset($_POST['username']) && $_POST['password']){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+
+    //Connect to database
+    $conn = mysqli_connect('localhost', 'root', '', 'login');
+    if(!$conn){
+        die("Connection failed: ". mysqli_connect_error());
+    }
+
+    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $result = mysqli_query($conn, $sql);
+
+    if(mysqli_num_rows($result) == 1){
+        header("Location: index.php");
+    }else{
+        echo "Usuario o contraseña incorrectos";
+    }    
+}
+?>
